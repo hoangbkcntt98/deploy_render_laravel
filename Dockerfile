@@ -1,6 +1,6 @@
 FROM php:8.2.7-fpm-alpine3.18
 
-LABEL maintainer="Ric Harvey <ric@squarecows.com>"
+LABEL maintainer="Hoang Do bugger485@gmail.com"
 
 ENV php_conf /usr/local/etc/php-fpm.conf
 ENV fpm_conf /usr/local/etc/php-fpm.d/www.conf
@@ -146,12 +146,12 @@ RUN chmod 755 /usr/bin/pull && chmod 755 /usr/bin/push && chmod 755 /usr/bin/let
 # copy in code
 ADD src/ /var/www/html/
 ADD errors/ /var/www/errors
+
+#custom scripts
 RUN mkdir /all_scripts
-ADD scripts/* /all_scripts
-RUN chmod 775 /all_scripts/start.sh
+ADD deploy_scripts/* /all_scripts
 RUN chmod 775 /all_scripts/deploy.sh
 
-# copy in code
 ADD src/ /var/www/html/
 ADD errors/ /var/www/errors
 ENV SKIP_COMPOSER 1
@@ -167,6 +167,13 @@ ENV LOG_CHANNEL stderr
 
 # Allow composer to run as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
+
+
+# Git setup 
+
+ENV GIT_EMAIL bugger485@gmail.com 
+ENV GIT_NAME=hoangbkcntt98 
+ENV GIT_REPO=https://github.com/hoangbkcntt98/panda_japanese.git
 
 EXPOSE 443 80
 
